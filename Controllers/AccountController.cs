@@ -17,7 +17,7 @@ namespace DataValidationProject.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Login(UserLogin model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
@@ -30,5 +30,46 @@ namespace DataValidationProject.Controllers
         {
             return View();
         }
+
+        // Mothed for remote validation
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult CheckUsername(string username)
+        {
+            // Simulate checking username against a database
+            var takenUsernames = new List<string> { "admin", "root", "system", "moderator", "user" };
+
+            if (takenUsernames.Contains(username.ToLower()))
+            {
+                return Json($"The username {username} is already taken.");
+            }
+
+            return Json(true);
+        }
+
+        // GET: /Account/Register
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Register(UserRegistration model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            return RedirectToAction("RegisterationSuccess");
+        }
+
+        // GET: /Account/RegisterationSuccess
+        [HttpGet]
+        public IActionResult RegisterationSuccess()
+        {
+            return View();
+        }
+
     }
-}
+}  
