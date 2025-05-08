@@ -61,7 +61,7 @@ namespace DataValidationProject.Models
             {
                 if (dateTime > DateTime.Today)
                 {
-                    return new ValidationResult(ErrorMessage ?? "Date must be in the past")
+                    return new ValidationResult(ErrorMessage ?? "Date must be in the past");
                 }
             }
             return ValidationResult.Success;
